@@ -1,17 +1,42 @@
 import { useState } from "react";
 import { GoEye, GoEyeClosed } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bgImg from '../../../assets/images/login.jpg'
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { saveUser } from "../../../apis/utils";
 
 const Login = () => {
+    const { signInWithGoogle, loginUser } = useAuth();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const handleGoogleSignIn = async () => { }
-    const handleLogin = async () => { }
+    const handleGoogleSignIn = async () => {
+        try {
+            const data = await signInWithGoogle();
+            await saveUser(data?.user);
+            toast.success('Login Successfull');
+            navigate('/');
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+        try {
+            const result = await loginUser(email, password);
+            console.log(result);
+            toast.success('Login Successfull');
+            navigate('/');
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
     return (
         <div className='flex justify-center items-center mt-12'>
-            {/* <Helmet>
-                <title>Voluntrix | Registration</title>
-            </Helmet> */}
             <div className='flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl '>
                 <div className='w-full px-6 py-8 md:px-8 lg:w-1/2'>
 

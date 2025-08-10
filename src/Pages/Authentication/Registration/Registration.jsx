@@ -4,22 +4,57 @@ import { GoEye, GoEyeClosed } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { saveUser, uploadImage } from "../../../apis/utils";
 
 const Registration = () => {
-    const { signInWithGoogle } = useAuth();
+    const { signInWithGoogle, createUser, updateProfileUser } = useAuth();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const handleGoogleSignIn = async () => {
         try {
-            await signInWithGoogle();
-
+            const data = await signInWithGoogle();
+            await saveUser(data?.user);
             toast.success('Sign in Successfull');
             navigate('/');
         } catch (error) {
             toast.error(error.message)
         }
     }
-    const handleRegistration = async () => { }
+    const handleRegistration = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const photo = form.image.files[0];
+        const photoURL = await uploadImage(photo);
+        const email = form.email.value;
+        const password = form.password.value;
+
+
+        // set password validation
+        if (!/[A-Z]/.test(password)) {
+            toast.error("Password must include at least one uppercase letter (A-Z)");
+            return
+        } else if (!/[a-z]/.test(password)) {
+            toast.error("Password must include at least one lowercase letter (a-z)");
+            return
+        } else if (password.length < 6) {
+            toast.error('Password must be 6 characters or longor')
+        } else {
+            // create users
+            try {
+                const reuslt = await createUser(email, password);
+                saveUser({ ...reuslt?.user, displayName: name, photoURL })
+                await updateProfileUser(name, photoURL)
+                toast.success('Create User Successful!!!')
+
+                console.log(reuslt);
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message);
+            }
+        }
+    }
+
     return (
         <div className='flex justify-center items-center mt-3'>
             {/* <Helmet>
@@ -100,7 +135,7 @@ const Registration = () => {
                                 >
                                     Photo
                                 </label>
-                                <input type="file" className="file-input h-[43px] text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-10  focus:outline-none focus:ring focus:ring-blue-300" />
+                                <input type="file" name="image" className="file-input h-[43px] text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-10  focus:outline-none focus:ring focus:ring-blue-300" />
                             </div>
                         </div>
                         {/* email */}
