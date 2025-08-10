@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { IoBagAddOutline } from "react-icons/io5";
 import { AiOutlineProduct } from "react-icons/ai";
-import Common from "../Common/Common";
-
+import Common from "../Common/Common/Common";
 
 const Sidebar = () => {
     return (
