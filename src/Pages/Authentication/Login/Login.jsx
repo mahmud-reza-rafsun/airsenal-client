@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { GoEye, GoEyeClosed } from "react-icons/go";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import bgImg from '../../../assets/images/login.jpg'
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { saveUser } from "../../../apis/utils";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
-    const { signInWithGoogle, loginUser } = useAuth();
+    const { signInWithGoogle, loginUser, user, loading } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/";
+    if (user) return <Navigate to={from} replace={true} />
+    if (loading) return <LoadingSpinner />
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [showPassword, setShowPassword] = useState(false);
     const handleGoogleSignIn = async () => {
         try {
             const data = await signInWithGoogle();
             await saveUser(data?.user);
+            navigate(from, { replace: true })
             toast.success('Login Successfull');
             navigate('/');
         } catch (error) {
@@ -27,8 +35,8 @@ const Login = () => {
         const password = form.password.value;
         console.log(email, password);
         try {
-            const result = await loginUser(email, password);
-            console.log(result);
+            await loginUser(email, password);
+            navigate(from, { replace: true })
             toast.success('Login Successfull');
             navigate('/');
         } catch (error) {

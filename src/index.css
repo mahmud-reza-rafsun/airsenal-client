@@ -2,6 +2,7 @@
 @plugin "daisyui";
 
 .active {
-    background-color: rgb(124, 73, 219);
+    background-color: rgb(103, 90, 216);
     color: #fff;
+    border-radius: 8px;
 }
