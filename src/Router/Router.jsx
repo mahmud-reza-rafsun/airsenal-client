@@ -7,6 +7,10 @@ import Dashboard from "../Layout/Dashboard";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import MyProduct from "../Pages/Dashboard/MyProduct/MyProduct";
 import PrivetRoute from "./PrivetRoute";
+import Profile from "../Pages/Dashboard/Common/Profile/Profile";
+import MyProductUpdate from "../Pages/Dashboard/MyProduct/MyProductUpdate";
+import FeatureCardDetails from "../Pages/Home/Discover/FeaturedProducts/FeatureCardDetails";
+import AllProducts from "../Pages/AllProducts/AllProducts";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +28,14 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />
+            },
+            {
+                path: '/feature-card-details/:id',
+                element: <FeatureCardDetails />
+            },
+            {
+                path: '/products',
+                element: <AllProducts />
             }
         ]
     },
@@ -40,6 +52,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/my-product',
                 element: <MyProduct />
+            },
+            {
+                path: '/dashboard/profile',
+                element: <Profile />
+            },
+            {
+                path: '/dashboard/prouct-update/:id',
+                element: <MyProductUpdate />
             }
         ]
     }

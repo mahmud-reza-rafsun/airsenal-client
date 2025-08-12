@@ -8,6 +8,7 @@ import { saveUser } from "../../../apis/utils";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const { signInWithGoogle, loginUser, user, loading } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -15,8 +16,6 @@ const Login = () => {
     if (user) return <Navigate to={from} replace={true} />
     if (loading) return <LoadingSpinner />
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [showPassword, setShowPassword] = useState(false);
     const handleGoogleSignIn = async () => {
         try {
             const data = await signInWithGoogle();

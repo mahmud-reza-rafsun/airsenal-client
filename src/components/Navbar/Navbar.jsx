@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png"
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -6,10 +6,12 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
     const { user, logOutUser } = useAuth();
+    const navigate = useNavigate();
     const handleLogOut = async () => {
         try {
             await logOutUser()
             toast.success("Log Out Successfull");
+            navigate('/')
         } catch (error) {
             toast.error(error.message)
         }

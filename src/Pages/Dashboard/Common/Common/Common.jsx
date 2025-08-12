@@ -24,9 +24,9 @@ const Common = () => {
                 </Link>
             </li>
             <li>
-                <Link to="/dashboard/my-product" className="text-lg text-gray-800"><LuUserRoundCog />
+                <NavLink to="/dashboard/profile" className="text-lg text-gray-800"><LuUserRoundCog />
                     <span className="text-[15px] font-medium mt-[2px]">Profile</span>
-                </Link>
+                </NavLink>
             </li>
             <li>
                 <Link onClick={handleLogOut} to="/dashboard/my-product" className="text-lg text-gray-800"><MdLogout />

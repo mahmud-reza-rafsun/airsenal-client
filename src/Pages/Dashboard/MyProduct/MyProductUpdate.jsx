@@ -3,14 +3,26 @@ import { uploadImage } from "../../../apis/utils";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast"
-import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddProduct = () => {
+const MyProductUpdate = () => {
     const [showText, setShowText] = useState({ name: 'Upload Image' })
     const { user } = useAuth();
-    const navigate = useNavigate();
+    const navigate = useNavigate('/dashboard/my-product')
     const axiosSecure = useAxiosSecure();
-    const handleAddProduct = async (e) => {
+    const { id } = useParams();
+    // load all data
+    const { data: productDetails = [] } = useQuery({
+        queryKey: ['productDetails'],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/get-product/${id}`);
+            return data;
+        }
+    })
+    const { _id, productName, newTag, description } = productDetails || {};
+
+    const handleUpdateProduct = async (e) => {
         e.preventDefault();
         const form = e.target;
         const productName = form.productName.value;
@@ -19,23 +31,22 @@ const AddProduct = () => {
         const description = form.description.value;
         const photo = form.image.files[0];
         const image = await uploadImage(photo);
-        const votes = 0;
 
         const newTag = tag.split('\n').map((item) => item.trim()).filter(Boolean);
-        const productDetails = { productName, newTag, description, image, votes, owner: { email, name: user.displayName } };
+        const productDetails = { productName, newTag, description, image, owner: { email, name: user.displayName } };
 
-        // send data in db
+        // update data in db
         try {
-            await axiosSecure.post(`${import.meta.env.VITE_API_URL}/add-product`, productDetails);
-            toast.success('Product add Successful!!!')
+            await axiosSecure.patch(`${import.meta.env.VITE_API_URL}/update-product/${id}`, productDetails);
+            toast.success('Product Update Successful!!!')
             navigate('/dashboard/my-product')
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
     }
     return (
         <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
-            <form onSubmit={handleAddProduct}>
+            <form onSubmit={handleUpdateProduct}>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
                     <div className='space-y-6'>
                         {/* Name */}
@@ -48,6 +59,7 @@ const AddProduct = () => {
                                 name='productName'
                                 id='name'
                                 type='text'
+                                defaultValue={productName}
                                 placeholder='Product Name'
                                 required
                             />
@@ -61,6 +73,7 @@ const AddProduct = () => {
 
                             <textarea
                                 id='description'
+                                defaultValue={description}
                                 placeholder='Write plant description here...'
                                 className='block rounded-md focus:indigo-300 w-full h-32 px-4 py-3 text-gray-800  border border-indigo-300 bg-white focus:outline-indigo-500 '
                                 name='description'
@@ -74,7 +87,7 @@ const AddProduct = () => {
                                 <label htmlFor='price' className='block text-gray-600 '>
                                     Tag
                                 </label>
-                                <textarea name="tag" className='w-full px-4 py-3 text-gray-800 border border-indigo-300 focus:outline-indigo-500 rounded-md bg-white' id=""></textarea>
+                                <textarea name="tag" defaultValue={newTag} className='w-full px-4 py-3 text-gray-800 border border-indigo-300 focus:outline-indigo-500 rounded-md bg-white' id=""></textarea>
                             </div>
                             {/* {Owner } */}
                             <div className='space-y-1 text-sm'>
@@ -140,7 +153,7 @@ const AddProduct = () => {
                             type='submit'
                             className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-indigo-500 cursor-pointer'
                         >
-                            Save
+                            Update
                         </button>
                     </div>
                 </div>
@@ -149,4 +162,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default MyProductUpdate;
