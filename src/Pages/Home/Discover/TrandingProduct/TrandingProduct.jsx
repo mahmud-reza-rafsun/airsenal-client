@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { BsCaretUp } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const TrandingProduct = () => {
     const { data: trendings = [] } = useQuery({
@@ -17,7 +17,7 @@ const TrandingProduct = () => {
             </div>
             <div className="space-y-4">
                 {
-                    trendings.map((tranding) => <div key={tranding?._id} className="p-4 bg-gray-100 hover:bg-gray-200/70 duration-300 rounded-md flex items-center justify-between gap-8">
+                    trendings.map((tranding) => <div key={tranding?._id} className="p-4 bg-gray-100 hover:bg-gray-200/70 duration-300 rounded-md flex flex-col lg:flex-row items-center justify-between gap-y-4 lg:gap-8">
                         <div className="flex gap-4 justify-center items-center">
 
                             <div className="space-y-1">
@@ -32,7 +32,6 @@ const TrandingProduct = () => {
                             </div>
                         </div>
                         <div className="">
-
                             <div className="border-2 flex gap-2 border-white bg-white py-1 px-3 text-center rounded-lg cursor-pointer">
                                 <span className="text-sm font-bold text-gray-500">UpVote</span>
                                 <p className="text-sm font-bold text-gray-500 ">{tranding?.votes}</p>
@@ -40,6 +39,12 @@ const TrandingProduct = () => {
                         </div>
                     </div>)
                 }
+
+                <Link to="/products">
+                    <div className="flex justify-center">
+                        <button className="btn bg-indigo-500 text-white rounded-3xl border-none">Show All Product</button>
+                    </div>
+                </Link>
             </div>
         </div>
     );

@@ -2,11 +2,16 @@ import { NavLink } from "react-router-dom";
 import { IoBagAddOutline } from "react-icons/io5";
 import { AiOutlineProduct } from "react-icons/ai";
 import Common from "../Common/Common/Common";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { MdOutlineReviews } from "react-icons/md";
+
+
 
 const Sidebar = () => {
     return (
         <div>
             <ul className="menu w-full">
+                {/* users */}
                 <div className="py-5 space-y-3">
                     <li>
                         <NavLink to="/dashboard/add-product" className="text-lg text-gray-800">
@@ -17,6 +22,20 @@ const Sidebar = () => {
                     <li>
                         <NavLink to="/dashboard/my-product" className="text-lg text-gray-800"><AiOutlineProduct />
                             <span className="text-[15px] font-medium mt-[2px]">My Products</span>
+                        </NavLink>
+                    </li>
+                </div>
+                {/* moderator */}
+                <div className="py-5 space-y-3">
+                    <li>
+                        <NavLink to="/dashboard/review-products" className="text-lg text-gray-800">
+                            <MdOutlineReviews />
+                            <span className="text-[15px] font-medium -mt-[1px]">Product Review</span>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/reported-content" className="text-lg text-gray-800"><MdOutlineReportGmailerrorred />
+                            <span className="text-[15px] font-medium mt-[2px]">Reported Content</span>
                         </NavLink>
                     </li>
                 </div>

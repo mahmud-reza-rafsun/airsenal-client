@@ -7,7 +7,7 @@ const FeaturedProducts = () => {
     const { data: products = [] } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/get-product`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/approve-products`);
             return data;
         }
     })
@@ -33,11 +33,11 @@ const FeaturedProducts = () => {
             </div>
             <div className="space-y-4">
                 {
-                    products.map((product) => <div key={product?._id} className="p-4 bg-gray-100 rounded-md flex items-center justify-between gap-8">
-                        <div className="flex gap-4 justify-center items-center">
+                    products.map((product) => <div key={product?._id} className="p-4 bg-gray-100 rounded-md flex items-center justify-between gap-5 lg:gap-8 flex-col sm:flex-row">
+                        <div className="flex gap-4 flex-col sm:flex-row justify-center items-center">
                             <div>
                                 <img
-                                    className="w-20 h-20 rounded-md object-cover"
+                                    className="w-full lg:w-20 h-36 lg:h-10 rounded-md object-cover"
                                     src={product?.image}
                                     alt={product?.productName} />
                             </div>
@@ -52,9 +52,13 @@ const FeaturedProducts = () => {
                             </div>
                         </div>
                         <div className="">
-                            <div onClick={() => voteCount.mutate(product?._id)} className="border-2 border-gray-200 hover:border-indigo-500 duration-300  py-[1px] px-2 hover:broder-indigo-500 text-center rounded-lg cursor-pointer">
+                            <div onClick={() => voteCount.mutate(product?._id)} className="hover:border-indigo-500 duration-300 
+                                bg-white
+                                lg:py-[1px] lg:px-3 px-4 py-1 justify-center items-center 
+                                lg:block flex gap-x-3 
+                                text-center rounded-lg cursor-pointer">
                                 <span className="text-lg text-gray-500"><BsCaretUp /></span>
-                                <p className="text-sm font-bold text-gray-500">{product?.votes}</p>
+                                <p className="text-sm font-bold mt-1 text-gray-500">{product?.votes}</p>
                             </div>
                         </div>
                     </div>)

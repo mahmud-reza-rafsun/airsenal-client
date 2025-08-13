@@ -1,28 +1,16 @@
 import { useState } from "react";
-import { uploadImage } from "../../../apis/utils";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast"
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { uploadImage } from "../../../../apis/utils";
 
-const MyProductUpdate = () => {
+const AddProduct = () => {
     const [showText, setShowText] = useState({ name: 'Upload Image' })
     const { user } = useAuth();
-    const navigate = useNavigate('/dashboard/my-product')
+    const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
-    const { id } = useParams();
-    // load all data
-    const { data: productDetails = [] } = useQuery({
-        queryKey: ['productDetails'],
-        queryFn: async () => {
-            const { data } = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/get-product/${id}`);
-            return data;
-        }
-    })
-    const { _id, productName, newTag, description } = productDetails || {};
-
-    const handleUpdateProduct = async (e) => {
+    const handleAddProduct = async (e) => {
         e.preventDefault();
         const form = e.target;
         const productName = form.productName.value;
@@ -31,22 +19,24 @@ const MyProductUpdate = () => {
         const description = form.description.value;
         const photo = form.image.files[0];
         const image = await uploadImage(photo);
+        const status = "Pending";
+        const votes = 0;
 
         const newTag = tag.split('\n').map((item) => item.trim()).filter(Boolean);
-        const productDetails = { productName, newTag, description, image, owner: { email, name: user.displayName } };
+        const productDetails = { productName, newTag, description, image, status, votes, owner: { email, name: user.displayName } };
 
-        // update data in db
+        // send data in db
         try {
-            await axiosSecure.patch(`${import.meta.env.VITE_API_URL}/update-product/${id}`, productDetails);
-            toast.success('Product Update Successful!!!')
+            await axiosSecure.post(`${import.meta.env.VITE_API_URL}/add-product`, productDetails);
+            toast.success('Product add Successful!!!')
             navigate('/dashboard/my-product')
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message)
         }
     }
     return (
-        <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
-            <form onSubmit={handleUpdateProduct}>
+        <div className='w-full py-4 lg:py-0 lg:min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
+            <form onSubmit={handleAddProduct}>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
                     <div className='space-y-6'>
                         {/* Name */}
@@ -59,7 +49,6 @@ const MyProductUpdate = () => {
                                 name='productName'
                                 id='name'
                                 type='text'
-                                defaultValue={productName}
                                 placeholder='Product Name'
                                 required
                             />
@@ -73,7 +62,6 @@ const MyProductUpdate = () => {
 
                             <textarea
                                 id='description'
-                                defaultValue={description}
                                 placeholder='Write plant description here...'
                                 className='block rounded-md focus:indigo-300 w-full h-32 px-4 py-3 text-gray-800  border border-indigo-300 bg-white focus:outline-indigo-500 '
                                 name='description'
@@ -87,7 +75,7 @@ const MyProductUpdate = () => {
                                 <label htmlFor='price' className='block text-gray-600 '>
                                     Tag
                                 </label>
-                                <textarea name="tag" defaultValue={newTag} className='w-full px-4 py-3 text-gray-800 border border-indigo-300 focus:outline-indigo-500 rounded-md bg-white' id=""></textarea>
+                                <textarea name="tag" className='w-full px-4 py-3 text-gray-800 border border-indigo-300 focus:outline-indigo-500 rounded-md bg-white' id=""></textarea>
                             </div>
                             {/* {Owner } */}
                             <div className='space-y-1 text-sm'>
@@ -153,7 +141,7 @@ const MyProductUpdate = () => {
                             type='submit'
                             className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-indigo-500 cursor-pointer'
                         >
-                            Update
+                            Save
                         </button>
                     </div>
                 </div>
@@ -162,4 +150,4 @@ const MyProductUpdate = () => {
     );
 };
 
-export default MyProductUpdate;
+export default AddProduct;

@@ -1,13 +1,12 @@
 import { GoTrash } from "react-icons/go";
 import { RxUpdate } from "react-icons/rx";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom";
 
-const MyProductRow = ({ product, refetch }) => {
+const MyProductRow = ({ product, refetch, index }) => {
     const axiosSecure = useAxiosSecure();
-    const { _id, productName, newTag, description, image } = product || {};
-    console.log(newTag);
+    const { _id, productName, votes, status } = product || {};
 
     const handleDelete = async (id) => {
         try {
@@ -40,27 +39,31 @@ const MyProductRow = ({ product, refetch }) => {
 
     return (
         <tr>
-            <td>
-                <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                        <img
-                            src={image}
-                            alt={productName} />
-                    </div>
-                </div>
-            </td>
-            <td>
+            <td>{index + 1}</td>
+            <td className="font-semibold">
                 {productName}
             </td>
-            <td className="grid grid-cols-3 mt-3">
-                {newTag.map((tag, index) => (
-                    <span key={index} className="cursor-pointer text-blue-500 rounded-full text-[13px]">
-                        #{tag}
-                    </span>
-                ))}
+            <td>
+                {votes}
             </td>
-            <td className="">{description.substring(0, 30)}...</td>
-            <td className="flex gap-10 justify-center items-center">
+            <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>
+                <div
+                    className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2   
+                            ${status === "Pending" && 'text-blue-500 bg-blue-100/60'} 
+                            ${status === "Accepted" && 'text-green-500 bg-green-100/60'} 
+                            ${status === "Rejected" && 'text-red-500 bg-red-100/60'} `}
+                >
+                    <span
+                        className={`h-1.5 w-1.5 rounded-full 
+                            ${status === "Pending" && 'bg-blue-500'} 
+                            ${status === "Accepted" && 'bg-green-500'} 
+                            ${status === "Rejected" && 'bg-red-500'} 
+                        `}
+                    ></span>
+                    <h2 className='text-sm font-normal '>{status}</h2>
+                </div>
+            </td>
+            <td className="flex gap-10">
                 <span onClick={() => mordernDelete(_id)} className="text-red-500 text-xl cursor-pointer"><GoTrash /></span>
                 <Link to={`/dashboard/prouct-update/${_id}`}>
                     <span className="text-green-500 text-xl cursor-pointer"><RxUpdate /></span>
