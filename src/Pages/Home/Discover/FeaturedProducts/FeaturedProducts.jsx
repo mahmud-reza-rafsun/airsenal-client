@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BsCaretUp } from "react-icons/bs";
-
+import { BsCaretDown } from "react-icons/bs";
+import ReportModal from "../../../Dashboard/Moderator/ReportedContext/ReportModal";
 
 const FeaturedProducts = () => {
     const { data: products = [] } = useQuery({
@@ -37,7 +38,7 @@ const FeaturedProducts = () => {
                         <div className="flex gap-4 flex-col sm:flex-row justify-center items-center">
                             <div>
                                 <img
-                                    className="w-full lg:w-20 h-36 lg:h-10 rounded-md object-cover"
+                                    className="w-full lg:w-24 h-36 lg:h-20 rounded-md object-cover"
                                     src={product?.image}
                                     alt={product?.productName} />
                             </div>
@@ -51,14 +52,25 @@ const FeaturedProducts = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="">
-                            <div onClick={() => voteCount.mutate(product?._id)} className="hover:border-indigo-500 duration-300 
+                        <div className="flex gap-3 items-center">
+                            <div className="
+                                bg-white
+                                lg:py-[1px] lg:px-3 px-4 py-1 justify-center items-center 
+                                lg:block flex gap-x-3 
+                                text-center rounded-lg cursor-pointer">
+                                <span className="text-lg text-gray-500"><BsCaretDown /></span>
+                                <p className="text-sm font-bold  text-gray-500">0</p>
+                            </div>
+                            <div onClick={() => voteCount.mutate(product?._id)} className="
                                 bg-white
                                 lg:py-[1px] lg:px-3 px-4 py-1 justify-center items-center 
                                 lg:block flex gap-x-3 
                                 text-center rounded-lg cursor-pointer">
                                 <span className="text-lg text-gray-500"><BsCaretUp /></span>
                                 <p className="text-sm font-bold mt-1 text-gray-500">{product?.votes}</p>
+                            </div>
+                            <div className="">
+                                <ReportModal product={product} />
                             </div>
                         </div>
                     </div>)

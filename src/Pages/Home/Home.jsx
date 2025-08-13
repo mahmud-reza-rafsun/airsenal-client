@@ -1,6 +1,7 @@
 import FeaturedProducts from "./Discover/FeaturedProducts/FeaturedProducts";
 import Slider from "../../components/Slider/Slider";
 import TrandingProduct from "./Discover/TrandingProduct/TrandingProduct";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     return (
@@ -14,6 +15,11 @@ const Home = () => {
                     <TrandingProduct />
                 </div>
             </div>
+            <Link to="/products">
+                <div className="flex justify-center pb-10">
+                    <button className="btn bg-indigo-500 text-white rounded-3xl border-none">Show All Product</button>
+                </div>
+            </Link>
         </div>
     );
 };

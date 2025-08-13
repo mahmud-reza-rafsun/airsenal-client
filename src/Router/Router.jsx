@@ -11,6 +11,8 @@ import ReviewProduct from "../Pages/Dashboard/Moderator/ReviewProduct/ReviewProd
 import AddProduct from "../Pages/Dashboard/User/AddProduct/AddProduct";
 import MyProduct from "../Pages/Dashboard/User/MyProduct/MyProduct";
 import MyProductUpdate from "../Pages/Dashboard/User/MyProduct/MyProductUpdate";
+import ReviewDetails from "../Pages/Dashboard/Moderator/ReviewProduct/ReviewDetails";
+import ReportedContent from "../Pages/Dashboard/Moderator/ReportedContext/ReportedContent";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/review-products',
                 element: <ReviewProduct />
+            },
+            {
+                path: '/dashboard/review-details/:id',
+                element: <ReviewDetails />
+            },
+            {
+                path: '/dashboard/reported-content',
+                element: <ReportedContent />
             }
         ]
     }

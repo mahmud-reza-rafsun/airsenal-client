@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const TrandingProduct = () => {
     const { data: trendings = [] } = useQuery({
@@ -39,12 +38,6 @@ const TrandingProduct = () => {
                         </div>
                     </div>)
                 }
-
-                <Link to="/products">
-                    <div className="flex justify-center">
-                        <button className="btn bg-indigo-500 text-white rounded-3xl border-none">Show All Product</button>
-                    </div>
-                </Link>
             </div>
         </div>
     );

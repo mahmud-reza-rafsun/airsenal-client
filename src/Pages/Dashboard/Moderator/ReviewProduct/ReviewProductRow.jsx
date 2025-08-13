@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ReviewProductRow = ({ review, index, refetch }) => {
     const { _id, productName, status } = review || {};
@@ -43,7 +44,9 @@ const ReviewProductRow = ({ review, index, refetch }) => {
                 </div>
             </td>
             <td>
-                <button className="btn btn-sm bg-indigo-500 text-white border-none shadow-none rounded-3xl">See Details</button>
+                <Link to={`/dashboard/review-details/${_id}`}>
+                    <button className="btn btn-sm bg-indigo-500 text-white border-none shadow-none rounded-3xl">See Details</button>
+                </Link>
             </td>
             <td className="flex gap-5">
                 <button disabled={status === "Accepted"} onClick={() => handleApprovePost(_id)} className={`bg-blue-400 text-white ${status === "Accepted" && 'cursor-wait'} ${status === "Accepted" && 'bg-blue-500/50'}  cursor-pointer py-1 px-2 text-sm rounded-md font-semibold`}>Accept</button>
