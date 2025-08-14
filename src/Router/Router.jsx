@@ -13,6 +13,8 @@ import MyProduct from "../Pages/Dashboard/User/MyProduct/MyProduct";
 import MyProductUpdate from "../Pages/Dashboard/User/MyProduct/MyProductUpdate";
 import ReviewDetails from "../Pages/Dashboard/Moderator/ReviewProduct/ReviewDetails";
 import ReportedContent from "../Pages/Dashboard/Moderator/ReportedContext/ReportedContent";
+import ReportContentDetails from "../Pages/Dashboard/Moderator/ReportedContext/ReportContentDetails/ReportContentDetails";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/reported-content',
                 element: <ReportedContent />
+            },
+            {
+                path: '/dashboard/report-details/:id',
+                element: <ReportContentDetails />
+            },
+            {
+                path: '/dashboard/manage-users',
+                element: <ManageUsers />
             }
         ]
     }

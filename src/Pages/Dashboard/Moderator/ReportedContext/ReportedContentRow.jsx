@@ -1,10 +1,10 @@
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const ReportedContentRow = ({ report, index, refetch }) => {
     const axiosSecure = useAxiosSecure();
-    const { image, productName, votes, reportId } = report || {};
-    console.log(reportId);
+    const { image, productName, votes, reportId, _id } = report || {};
     const handleDelete = async (id) => {
         try {
             await axiosSecure.delete(`/delete-content/${id}`);
@@ -34,7 +34,7 @@ const ReportedContentRow = ({ report, index, refetch }) => {
         );
     }
     return (
-        <tr>
+        <tr className="">
             <th>{index + 1}</th>
             <td>
                 <div className="avatar">
@@ -53,7 +53,9 @@ const ReportedContentRow = ({ report, index, refetch }) => {
             </td>
 
             <th>
-                <button className="bg-blue-400  text-white cursor-pointer py-1 px-2 text-sm rounded-md font-semibold">Details</button>
+                <Link to={`/dashboard/report-details/${_id}`}>
+                    <button className="bg-blue-400  text-white cursor-pointer py-1 px-2 text-sm rounded-md font-semibold">Details</button>
+                </Link>
             </th>
             <td>
                 <button onClick={() => mordernDelete(reportId)} className={`bg-red-400  text-white cursor-pointer py-1 px-2 text-sm rounded-md font-semibold  `}>Delete</button>

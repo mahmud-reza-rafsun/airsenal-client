@@ -43,13 +43,14 @@ const Registration = () => {
             // create users
             try {
                 const reuslt = await createUser(email, password);
+                console.log(reuslt);
                 saveUser({ ...reuslt?.user, displayName: name, photoURL })
                 await updateProfileUser(name, photoURL)
                 toast.success('Create User Successful!!!')
 
                 console.log(reuslt);
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
                 toast.error(error.message);
             }
         }

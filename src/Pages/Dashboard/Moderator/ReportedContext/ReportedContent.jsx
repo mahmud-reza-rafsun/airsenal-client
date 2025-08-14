@@ -14,7 +14,7 @@ const ReportedContent = () => {
     })
     console.log(reports);
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-full py-4 lg:py-0  flex flex-col justify-center items-center text-gray-800 rounded-xl bg-red-100">
             <table className="table">
                 {/* head */}
                 <thead>
