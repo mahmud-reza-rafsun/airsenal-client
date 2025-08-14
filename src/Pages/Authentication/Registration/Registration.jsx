@@ -29,7 +29,6 @@ const Registration = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-
         // set password validation
         if (!/[A-Z]/.test(password)) {
             toast.error("Password must include at least one uppercase letter (A-Z)");

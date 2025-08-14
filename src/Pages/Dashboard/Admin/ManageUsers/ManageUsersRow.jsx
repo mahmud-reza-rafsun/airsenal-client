@@ -1,5 +1,6 @@
 import { HiUserGroup } from "react-icons/hi2";
 import { MdOutlineAddModerator } from "react-icons/md";
+import { GoTrash } from "react-icons/go";
 import moment from "moment-timezone";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
@@ -29,12 +30,22 @@ const ManageUsersRow = ({ user, index, refetch }) => {
             toast.error(error.message);
         }
     }
+    // delete user
+    const handleDeleteUsers = async (id) => {
+        try {
+            await axiosSecure.delete(`/users/delete/${id}`)
+            refetch();
+            toast.success('Delete User Successful!!!');
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
     return (
         <tr>
             <th>{index + 1}</th>
             <td>
                 <img
-                    className="rounded-md h-12 w-12"
+                    className="rounded-md h-12 w-12 object-cover"
                     src={image}
                     alt={name} />
             </td>
@@ -58,7 +69,7 @@ const ManageUsersRow = ({ user, index, refetch }) => {
                 </div>
             </td>
             <td>{loginTime}</td>
-            <th>
+            <th className="flex items-center">
                 <td>
                     <button disabled={role === "Admin"} onClick={() => handleMakeAdmin(_id)} className={`bg-green-400 text-white ${role === "Admin" && 'cursor-wait'} ${role === "Admin" && 'bg-green-500/50'}  cursor-pointer py-1 px-2 text-sm rounded-md font-semibold`}>
                         <HiUserGroup className="text-xl" />
@@ -67,6 +78,11 @@ const ManageUsersRow = ({ user, index, refetch }) => {
                 <td>
                     <button disabled={role === "Admin"} onClick={() => handleMakeModerator(_id)} className={`bg-blue-400 text-white ${role === "Admin" && 'cursor-wait'} ${role === "Admin" && 'bg-blue-500/50'} ${role === "Moderator" && 'cursor-wait'} ${role === "Moderator" && 'bg-blue-500/50'} cursor-pointer py-1 px-2 text-sm rounded-md font-semibold`}>
                         <MdOutlineAddModerator className="text-xl" />
+                    </button>
+                </td>
+                <td>
+                    <button onClick={() => handleDeleteUsers(_id)} className={`bg-red-400  text-white cursor-pointer py-[6px] px-2 text-sm rounded-md font-semibold`}>
+                        <GoTrash className="text-lg" />
                     </button>
                 </td>
             </th>

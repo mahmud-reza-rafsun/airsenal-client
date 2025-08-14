@@ -13,7 +13,6 @@ const ManageUsers = () => {
             return data;
         }
     })
-    console.log(users);
     return (
         <div className="overflow-x-auto w-full py-4 lg:py-0  flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-100/30">
             <table className="table">

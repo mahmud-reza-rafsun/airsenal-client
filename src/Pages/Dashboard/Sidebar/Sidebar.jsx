@@ -53,9 +53,9 @@ const Sidebar = () => {
                 {
                     role === "Admin" && <div className="py-5 space-y-3">
                         <li>
-                            <NavLink to="/dashboard/static" className="text-lg text-gray-800">
+                            <NavLink to="/dashboard/statistics" className="text-lg text-gray-800">
                                 <LuChartSpline />
-                                <span className="text-[15px] font-medium -mt-[1px]">Static</span>
+                                <span className="text-[15px] font-medium -mt-[1px]">Statistics</span>
                             </NavLink>
                         </li>
                         <li>

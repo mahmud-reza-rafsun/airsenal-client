@@ -15,6 +15,7 @@ import ReviewDetails from "../Pages/Dashboard/Moderator/ReviewProduct/ReviewDeta
 import ReportedContent from "../Pages/Dashboard/Moderator/ReportedContext/ReportedContent";
 import ReportContentDetails from "../Pages/Dashboard/Moderator/ReportedContext/ReportContentDetails/ReportContentDetails";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import Statistics from "../Pages/Dashboard/Admin/Statistics/Statistics";
 
 const router = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/manage-users',
                 element: <ManageUsers />
+            },
+            {
+                path: '/dashboard/statistics',
+                element: <Statistics />
             }
         ]
     }

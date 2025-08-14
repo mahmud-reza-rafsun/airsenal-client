@@ -13,7 +13,6 @@ const useRole = () => {
             return data.role || null
         },
     })
-    console.log(role)
     return { role, isLoading }
 }
 
