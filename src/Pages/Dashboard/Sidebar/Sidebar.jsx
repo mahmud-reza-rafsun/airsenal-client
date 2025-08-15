@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { IoBagAddOutline } from "react-icons/io5";
 import { AiOutlineProduct } from "react-icons/ai";
+import { MdManageHistory } from "react-icons/md";
 import Common from "../Common/Common/Common";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { MdOutlineReviews } from "react-icons/md";
@@ -64,7 +65,12 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/manage-coupons" className="text-lg text-gray-800"><FcMoneyTransfer />
+                            <NavLink to="/dashboard/add-coupon" className="text-lg text-gray-800"><FcMoneyTransfer />
+                                <span className="text-[15px] font-medium mt-[2px]">Add Coupon</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/manage-coupons" className="text-lg text-gray-800"><MdManageHistory />
                                 <span className="text-[15px] font-medium mt-[2px]">Manage Coupons</span>
                             </NavLink>
                         </li>

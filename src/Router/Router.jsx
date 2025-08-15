@@ -16,6 +16,9 @@ import ReportedContent from "../Pages/Dashboard/Moderator/ReportedContext/Report
 import ReportContentDetails from "../Pages/Dashboard/Moderator/ReportedContext/ReportContentDetails/ReportContentDetails";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import Statistics from "../Pages/Dashboard/Admin/Statistics/Statistics";
+import AddCoupon from "../Pages/Dashboard/Admin/Coupon/AddCoupon/AddCoupon";
+import ManageCoupon from "../Pages/Dashboard/Admin/Coupon/ManageCoupon/ManageCoupon";
+import UpdateManageCoupon from "../Pages/Dashboard/Admin/Coupon/ManageCoupon/UpdateManageCoupon";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +88,18 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/statistics',
                 element: <Statistics />
+            },
+            {
+                path: '/dashboard/add-coupon',
+                element: <AddCoupon />
+            },
+            {
+                path: '/dashboard/manage-coupons',
+                element: <ManageCoupon />
+            },
+            {
+                path: '/dashboard/update-coupon/:id',
+                element: <UpdateManageCoupon />
             }
         ]
     }
