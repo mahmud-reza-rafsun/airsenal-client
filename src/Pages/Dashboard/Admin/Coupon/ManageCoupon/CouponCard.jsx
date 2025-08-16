@@ -19,6 +19,8 @@ const CouponCard = () => {
             return data;
         }
     })
+    console.log(`${import.meta.env.VITE_API_URL}/get-coupon`);
+    console.log(`${import.meta.env.VITE_API_URL}`);
     return (
         <>
             <Swiper
