@@ -19,6 +19,7 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         try {
             const data = await signInWithGoogle();
+            console.log(data);
             await saveUser(data?.user);
             navigate(from, { replace: true })
             toast.success('Login Successfull');

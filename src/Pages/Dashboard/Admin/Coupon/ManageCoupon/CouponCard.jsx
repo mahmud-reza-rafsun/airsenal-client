@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../../../hooks/useAxiosSecure";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,17 +9,16 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
+import axios from "axios";
 
 const CouponCard = () => {
-    const axiosSecure = useAxiosSecure();
     const { data: coupons = [] } = useQuery({
         queryKey: ['card'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/get-coupon`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/get-coupon`);
             return data;
         }
     })
-    console.log(coupons);
     return (
         <>
             <Swiper
@@ -30,7 +28,7 @@ const CouponCard = () => {
                 modules={[Pagination]}
                 className="mySwiper">
                 {
-                    coupons.map((coupon) => <SwiperSlide key={coupon?._id}>
+                    coupons && coupons?.map((coupon) => <SwiperSlide key={coupon?._id}>
                         <div className="rounded-lg bg-black/50 text-white w-full h-[40vh] lg:h-[20vh] p-4 text-center">
                             <h2 className="text-lg md:text-xl font-bold mb-2">Code: {coupon?.code}</h2>
                             <h2 className="text-lg md:text-xl font-bold mb-2">Expair Date: {coupon?.date}</h2>
