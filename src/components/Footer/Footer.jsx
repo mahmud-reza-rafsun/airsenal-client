@@ -9,7 +9,7 @@ const Footer = () => {
                     <p>
                         AIrsenal Industries Ltd.
                         <br />
-                        Providing reliable tech update since 2025
+                        Providing reliable tech update since 2025.
                     </p>
                 </div>
                 <nav className="text-center lg:text-left">
