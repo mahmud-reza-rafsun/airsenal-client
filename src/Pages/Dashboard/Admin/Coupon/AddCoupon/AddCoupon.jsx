@@ -14,10 +14,11 @@ const AddCoupon = () => {
 
         // send coupon data in db
         try {
-            await axiosSecure.post(`/add-coupon`, couponData);
+            await axiosSecure.post(`/add-coupon/${code}`, couponData);
             toast.success('Add Coupon Successful!!')
         } catch (error) {
-            toast.error(error);
+            toast.error(error.response?.data?.message || error.message);
+            console.log(error.message);
         }
     }
 

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
-import Home from "../Pages/Home/Home";
 import Registration from "../Pages/Authentication/Registration/Registration";
 import Login from "../Pages/Authentication/Login/Login";
 import Dashboard from "../Layout/Dashboard";
@@ -19,6 +18,7 @@ import Statistics from "../Pages/Dashboard/Admin/Statistics/Statistics";
 import AddCoupon from "../Pages/Dashboard/Admin/Coupon/AddCoupon/AddCoupon";
 import ManageCoupon from "../Pages/Dashboard/Admin/Coupon/ManageCoupon/ManageCoupon";
 import UpdateManageCoupon from "../Pages/Dashboard/Admin/Coupon/ManageCoupon/UpdateManageCoupon";
+import Home from "../Pages/Home/Home/Home";
 
 const router = createBrowserRouter([
     {

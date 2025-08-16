@@ -2,8 +2,10 @@ import axios from "axios";
 import { IoWarningOutline } from "react-icons/io5";
 import { LuBug } from "react-icons/lu";
 import toast from "react-hot-toast"
+import useAuth from "../../../../hooks/useAuth";
 
 const ReportModal = ({ product }) => {
+    const { user } = useAuth();
     const { _id: reportId, image, owner, votes, _id } = product || {};
     const handleReport = async (e) => {
         e.preventDefault();
@@ -22,10 +24,12 @@ const ReportModal = ({ product }) => {
     }
     return (
         <div>
-            <button className=" bg-yellow-400
+            <button disabled={user?.email === owner?.email} className={` bg-yellow-400
                                 lg:py-[10px] lg:px-3 px-4 py-1 justify-center items-center 
+                                ${user?.email === owner?.email && 'cursor-wait'}
+                                ${user?.email === owner?.email && "bg-yellow-500/70"}
                                 lg:block flex gap-x-3 
-                                text-center rounded-lg cursor-pointer" onClick={() => document.getElementById('my_modal_1').showModal()}><IoWarningOutline className="text-white text-xl" />
+                                text-center rounded-lg cursor-pointer`} onClick={() => document.getElementById('my_modal_1').showModal()}><IoWarningOutline className="text-white text-xl" />
             </button>
             <dialog id="my_modal_1" className="modal">
                 <form onSubmit={handleReport} className="modal-box">
