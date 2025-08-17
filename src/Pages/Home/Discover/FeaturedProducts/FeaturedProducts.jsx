@@ -3,8 +3,12 @@ import axios from "axios";
 import { BsCaretUp } from "react-icons/bs";
 import { BsCaretDown } from "react-icons/bs";
 import ReportModal from "../../../Dashboard/Moderator/ReportedContext/ReportModal";
+import useAuth from "../../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedProducts = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const { data: products = [] } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
@@ -25,6 +29,14 @@ const FeaturedProducts = () => {
             queryClient.invalidateQueries(['trendings']);
         }
     });
+
+    const handleVote = (id) => {
+        if (!user) {
+            navigate('/login');
+            return
+        }
+        voteCount.mutate(id)
+    }
 
 
     return (
@@ -61,14 +73,13 @@ const FeaturedProducts = () => {
                                 <span className="text-lg text-gray-500"><BsCaretDown /></span>
                                 <p className="text-sm font-bold  text-gray-500">0</p>
                             </div>
-                            <div onClick={() => voteCount.mutate(product?._id)} className="
-                                bg-white
+                            <button onClick={() => handleVote(product?._id)} className={`bg-white
                                 lg:py-[1px] lg:px-3 px-4 py-1 justify-center items-center 
-                                lg:block flex gap-x-3 
-                                text-center rounded-lg cursor-pointer">
+                                lg:block flex gap-x-3
+                                text-center rounded-lg cursor-pointer`}>
                                 <span className="text-lg text-gray-500"><BsCaretUp /></span>
                                 <p className="text-sm font-bold mt-1 text-gray-500">{product?.votes}</p>
-                            </div>
+                            </button>
                             <div className="">
                                 <ReportModal product={product} />
                             </div>

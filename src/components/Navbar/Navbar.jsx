@@ -2,10 +2,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png"
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useRole from "../../hooks/useRole";
 
 
 const Navbar = () => {
     const { user, logOutUser } = useAuth();
+    const { role } = useRole();
     const navigate = useNavigate();
     const handleLogOut = async () => {
         try {
@@ -51,10 +53,10 @@ const Navbar = () => {
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <li>
-                                        <a className="justify-between">
+                                        <Link to="http://localhost:5173/dashboard/profile" className="justify-between">
                                             Profile
-                                            <span className="badge">Admin</span>
-                                        </a>
+                                            <span className="badge">{role}</span>
+                                        </Link>
                                     </li>
                                     <li><Link to="/dashboard">Dashboard</Link></li>
                                     <li onClick={handleLogOut}><a>Logout</a></li>
